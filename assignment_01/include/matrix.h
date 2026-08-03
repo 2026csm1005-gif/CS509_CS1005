@@ -7,7 +7,7 @@
 using namespace std;
 
 
-// rows represents No. of rows, cols represent No. of columns and data represent Dynamically allocated 2D array.
+//Rows represents No. of rows, cols represent No. of columns and data represent Dynamically allocated 2D array.
 struct Matrix
 {
     int rows;
@@ -15,7 +15,7 @@ struct Matrix
     int **data;
 };
 
-// Matrix utility functions
+//Matrix utility functions.
 Matrix createMatrix(int rows, int cols);
 void destroyMatrix(Matrix &matrix);
 void readMatrix(ifstream &inputFile, Matrix &matrix);

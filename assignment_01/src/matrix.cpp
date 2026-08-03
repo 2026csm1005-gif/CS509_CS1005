@@ -1,6 +1,6 @@
 #include "../include/matrix.h"
 
-// To create a matrix with the given dimensions.(Memory is allocated dynamically and initialized to zero.)
+//To create a matrix with the given dimensions.(Memory is allocated dynamically and initialized to zero.)
 Matrix createMatrix(int rows, int cols)
 {
     Matrix matrix;
@@ -18,7 +18,7 @@ Matrix createMatrix(int rows, int cols)
     return matrix;
 }
 
-// To Free all dynamically allocated memory.
+//To Free all dynamically allocated memory.
 void destroyMatrix(Matrix &matrix)
 {
     if (matrix.data == nullptr)
@@ -33,7 +33,7 @@ void destroyMatrix(Matrix &matrix)
     matrix.cols = 0;
 }
 
-// To read matrix elements from an input file.
+//To read matrix elements from an input file.
 void readMatrix(ifstream &inputFile, Matrix &matrix)
 {
     for (int i = 0; i < matrix.rows; i++)
@@ -45,7 +45,7 @@ void readMatrix(ifstream &inputFile, Matrix &matrix)
     }
 }
 
-// Prints the matrix.
+//Prints the matrix.
 void printMatrix(const Matrix &matrix)
 {
     for (int i = 0; i < matrix.rows; i++)
