@@ -10,9 +10,14 @@ using namespace std;
 
 const int BLOCK_SIZE = 32;
 
-int main()
+int main(int argc, char *argv[])
 {
-    ifstream inputFile("tests/gemm/gemm_test_01.txt");
+    if (argc != 2)
+    {
+        cerr << "Usage: gemm <input_file>\n";
+        return 1;
+    }
+    ifstream inputFile(argv[1]);
 
     if (!inputFile.is_open())
     {
