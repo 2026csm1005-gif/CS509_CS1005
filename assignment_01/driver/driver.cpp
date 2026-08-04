@@ -34,21 +34,21 @@ int main()
 
     inputFile.close();
 
-    //Simple GEMM
+    // Simple GEMM
     Timer simpleTimer;
 
     simpleTimer.start();
     Matrix simpleResult = simpleGemm(matrixA, matrixB);
     simpleTimer.stop();
 
-    //Blocking GEMM
+    // Blocking GEMM
     Timer blockingTimer;
 
     blockingTimer.start();
     Matrix blockingResult = blockingGemm(matrixA, matrixB, BLOCK_SIZE);
     blockingTimer.stop();
 
-    //Display Input
+/*  // Display Input
     cout << "Matrix A\n";
     printMatrix(matrixA);
 
@@ -58,8 +58,9 @@ int main()
     printMatrix(matrixB);
 
     cout << "\n";
+*/
 
-    //Display Results
+/*    // Display Results
     cout << "Simple GEMM Result\n";
     printMatrix(simpleResult);
 
@@ -69,8 +70,19 @@ int main()
     printMatrix(blockingResult);
 
     cout << "\n";
+*/
 
-    //Timing
+    // Verification
+    if (compareMatrices(simpleResult, blockingResult))
+    {
+        cout << "Result Verification : PASSED\n";
+    }
+    else
+    {
+        cout << "Result Verification : FAILED\n";
+    }
+
+    // Timing
     cout << fixed << setprecision(6);
     cout << "Simple GEMM Time : "
          << simpleTimer.getElapsedTime()
@@ -80,7 +92,7 @@ int main()
          << blockingTimer.getElapsedTime()
          << " ms\n";
 
-    //Cleanup
+    // Cleanup
     destroyMatrix(matrixA);
     destroyMatrix(matrixB);
     destroyMatrix(simpleResult);
