@@ -1,11 +1,14 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 
 #include "../include/matrix.h"
 #include "../include/gemm.h"
 #include "../include/timer.h"
 
 using namespace std;
+
+const int BLOCK_SIZE = 32;
 
 int main()
 {
@@ -31,36 +34,57 @@ int main()
 
     inputFile.close();
 
-    Timer timer;
+    //Simple GEMM
+    Timer simpleTimer;
 
-    timer.start();
+    simpleTimer.start();
+    Matrix simpleResult = simpleGemm(matrixA, matrixB);
+    simpleTimer.stop();
 
-    Matrix result = simpleGemm(matrixA, matrixB);
+    //Blocking GEMM
+    Timer blockingTimer;
 
-    timer.stop();
+    blockingTimer.start();
+    Matrix blockingResult = blockingGemm(matrixA, matrixB, BLOCK_SIZE);
+    blockingTimer.stop();
 
+    //Display Input
     cout << "Matrix A\n";
     printMatrix(matrixA);
 
-    cout << '\n';
+    cout << "\n";
 
     cout << "Matrix B\n";
     printMatrix(matrixB);
 
-    cout << '\n';
+    cout << "\n";
 
-    cout << "Resultant Matrix\n";
-    printMatrix(result);
+    //Display Results
+    cout << "Simple GEMM Result\n";
+    printMatrix(simpleResult);
 
-    cout << '\n';
+    cout << "\n";
 
-    cout << "Execution Time: "
-         << timer.getElapsedTime()
-         << " ms" << endl;
+    cout << "Blocking GEMM Result\n";
+    printMatrix(blockingResult);
 
+    cout << "\n";
+
+    //Timing
+    cout << fixed << setprecision(6);
+    cout << "Simple GEMM Time : "
+         << simpleTimer.getElapsedTime()
+         << " ms\n";
+
+    cout << "Blocking GEMM Time : "
+         << blockingTimer.getElapsedTime()
+         << " ms\n";
+
+    //Cleanup
     destroyMatrix(matrixA);
     destroyMatrix(matrixB);
-    destroyMatrix(result);
+    destroyMatrix(simpleResult);
+    destroyMatrix(blockingResult);
 
     return 0;
 }
