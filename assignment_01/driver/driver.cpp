@@ -53,38 +53,47 @@ int main(int argc, char *argv[])
     Matrix blockingResult = blockingGemm(matrixA, matrixB, BLOCK_SIZE);
     blockingTimer.stop();
 
-/*  // Display Input
-    cout << "Matrix A\n";
-    printMatrix(matrixA);
+    // Displaying Input Matrices for small matrices only.
+    if ((matrixA.rows <= 10 && matrixA.cols <= 10) && (matrixB.rows <= 10 && matrixB.cols <= 10))
+    {
+        cout << "M = " << matrixA.rows << ", K = " << matrixB.rows << ", N = " << matrixB.cols << '\n';
+        cout << "Matrix A:\n";
+        printMatrix(matrixA);
 
-    cout << "\n";
+        cout << "\n";
 
-    cout << "Matrix B\n";
-    printMatrix(matrixB);
+        cout << "Matrix B:\n";
+        printMatrix(matrixB);
 
-    cout << "\n";
-*/
+        cout << "\n";
+    }
 
-/*    // Display Results
-    cout << "Simple GEMM Result\n";
-    printMatrix(simpleResult);
+    // Displaying Result Matrices for small matrices only.
+    if ((matrixA.rows <= 10 && matrixA.cols <= 10) && (matrixB.rows <= 10 && matrixB.cols <= 10))
+    {
+        cout << "Algorithm: GEMM Simple\n";
+        printMatrix(simpleResult);
 
-    cout << "\n";
+        cout << "\n";
 
-    cout << "Blocking GEMM Result\n";
-    printMatrix(blockingResult);
+        cout << "Algorithm: GEMM Blocking\n";
+        printMatrix(blockingResult);
 
-    cout << "\n";
-*/
+        cout << "\n";
+    }
 
     // Verification
-    if (compareMatrices(simpleResult, blockingResult))
+    if (!((matrixA.rows <= 10 && matrixA.cols <= 10) && (matrixB.rows <= 10 && matrixB.cols <= 10)))
     {
-        cout << "Result Verification : PASSED\n";
-    }
-    else
-    {
-        cout << "Result Verification : FAILED\n";
+        cout << "Result matrix is too large to display.\n";
+        if (compareMatrices(simpleResult, blockingResult))
+        {
+            cout << "Result Verification : PASSED\n";
+        }
+        else
+        {
+            cout << "Result Verification : FAILED\n";
+        }
     }
 
     // Timing
