@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 #include "../include/edge.h"
 #include "../include/csr.h"
 #include "../include/graph.h"
@@ -33,9 +34,17 @@ int main(int argc, char *argv[])
     timer.start();
     CSR csr = createCSR(edgeList, graph.vertices);
     timer.stop();
-    printGraph(graph);
-    printEdgeList(edgeList);
-    printCSR(csr);
+    if (graph.vertices <= 10)
+    {
+        printGraph(graph);
+        printEdgeList(edgeList);
+        printCSR(csr);
+    }
+    else
+    {
+        cout << "Graph too large to display!" << '\n';
+    }
+    cout << fixed << setprecision(6);
     cout << "CSR Conversion Time : " << timer.getElapsedTime() << " ms" << '\n';
     inputFile.close();
     cout << "\n=========================================\n";

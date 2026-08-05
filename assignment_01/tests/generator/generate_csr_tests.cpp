@@ -37,7 +37,7 @@ void generateUndirectedGraph(const string &fileName, int vertices, int neighbour
 
 int main()
 {
-    generateUndirectedGraph("tests/csr/csr_test_09.txt", 10, 3);
-    generateUndirectedGraph("tests/csr/csr_test_10.txt", 100, 3);
+    generateUndirectedGraph("tests/csr/csr_test_09.txt", 1000, 10);
+    generateUndirectedGraph("tests/csr/csr_test_10.txt", 2500, 3);
     return 0;
 }

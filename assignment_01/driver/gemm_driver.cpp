@@ -98,13 +98,8 @@ int main(int argc, char *argv[])
 
     // Timing
     cout << fixed << setprecision(6);
-    cout << "Simple GEMM Time : "
-         << simpleTimer.getElapsedTime()
-         << " ms\n";
-
-    cout << "Blocking GEMM Time : "
-         << blockingTimer.getElapsedTime()
-         << " ms\n";
+    cout << "Simple GEMM Time : " << simpleTimer.getElapsedTime() << " ms\n";
+    cout << "Blocking GEMM Time : " << blockingTimer.getElapsedTime() << " ms\n";
 
     // Cleanup
     destroyMatrix(matrixA);
