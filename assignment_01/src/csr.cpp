@@ -43,7 +43,9 @@ CSR createCSR(const vector<Edge> &edgeList, int vertices)
 
 void printCSR(const CSR &csr)
 {
-    cout << "\nCSR Representation\n\n";
+    cout << "=========================================\n";
+    cout << "CSR Representation\n";
+    cout << "=========================================\n";
     cout << "row_ptr : ";
     for (int value : csr.rowPtr)
     {

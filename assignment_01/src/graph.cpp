@@ -37,7 +37,9 @@ void readGraph(istream &input, Graph &graph)
 
 void printGraph(const Graph &graph)
 {
-    cout << "Adjacency List\n\n";
+    cout << "=========================================\n";
+    cout << "Adjacency List\n";
+    cout << "=========================================\n";
     for (int i = 0; i < graph.vertices; i++)
     {
         cout << i << " : ";

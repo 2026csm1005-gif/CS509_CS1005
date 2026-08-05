@@ -19,6 +19,10 @@ int main(int argc, char *argv[])
         cout << "Unable to open file.\n";
         return 1;
     }
+    cout << "\n";
+    cout << "=========================================\n";
+    cout << "CSR Graph Conversion\n";
+    cout << "=========================================\n\n";
     Graph graph;
     readGraph(inputFile, graph);
     printGraph(graph);
@@ -27,5 +31,8 @@ int main(int argc, char *argv[])
     CSR csr = createCSR(edgeList, graph.vertices);
     printCSR(csr);
     inputFile.close();
+    cout << "\n=========================================\n";
+    cout << "CSR Conversion Completed Successfully\n";
+    cout << "=========================================\n";
     return 0;
 }

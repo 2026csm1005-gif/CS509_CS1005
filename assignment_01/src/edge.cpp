@@ -23,9 +23,14 @@ vector<Edge> createEdgeList(const Graph &graph)
 
 void printEdgeList(const vector<Edge> &edgeList)
 {
-    cout << "\nEdge List\n\n";
+    cout << "\n=========================================\n";
+    cout << "Edge List\n";
+    cout << "=========================================\n";
+    cout << "Source\tDestination\tWeight\n";
+    cout << "-----------------------------------------\n";
     for (const Edge &edge : edgeList)
     {
-        cout << edge.source << " -> " << edge.destination << " (" << edge.weight << ")" << '\n';
+        cout << edge.source << "\t" << edge.destination << "\t\t" << edge.weight << '\n';
     }
+    cout << '\n';
 }
