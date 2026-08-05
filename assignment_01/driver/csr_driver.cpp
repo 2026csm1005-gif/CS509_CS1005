@@ -6,9 +6,14 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
-    ifstream inputFile("tests/csr/csr_test_01.txt");
+    if (argc != 2)
+    {
+        cerr << "Usage: csr_driver <input_file>\n";
+        return 1;
+    }
+    ifstream inputFile(argv[1]);
     if (!inputFile.is_open())
     {
         cout << "Unable to open file.\n";
