@@ -3,6 +3,7 @@
 #include "../include/edge.h"
 #include "../include/csr.h"
 #include "../include/graph.h"
+#include "../include/timer.h"
 
 using namespace std;
 
@@ -25,11 +26,17 @@ int main(int argc, char *argv[])
     cout << "=========================================\n\n";
     Graph graph;
     readGraph(inputFile, graph);
-    printGraph(graph);
+    // printGraph(graph);
     vector<Edge> edgeList = createEdgeList(graph);
-    printEdgeList(edgeList);
+    // printEdgeList(edgeList);
+    Timer timer;
+    timer.start();
     CSR csr = createCSR(edgeList, graph.vertices);
+    timer.stop();
+    printGraph(graph);
+    printEdgeList(edgeList);
     printCSR(csr);
+    cout << "CSR Conversion Time : " << timer.getElapsedTime() << " ms" << '\n';
     inputFile.close();
     cout << "\n=========================================\n";
     cout << "CSR Conversion Completed Successfully\n";

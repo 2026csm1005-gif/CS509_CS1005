@@ -24,12 +24,10 @@ void readGraph(istream &input, Graph &graph)
         for (int j = 0; j < numberOfNeighbors; j++)
         {
             Neighbor neighbor;
-
             input >> neighbor.destination;
 
-            // Temporary weights
+            // Temporary weights initialized to 1.
             neighbor.weight = 1;
-
             graph.adjacencyList[vertex].push_back(neighbor);
         }
     }
