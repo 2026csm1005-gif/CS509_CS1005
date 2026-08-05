@@ -16,7 +16,6 @@ bool fileExists(const string &path)
 int main()
 {
 
-
     char currentDirectory[1024];
     _getcwd(currentDirectory, sizeof(currentDirectory));
 
@@ -44,8 +43,19 @@ int main()
         switch (choice)
         {
         case 1:
-            system("g++ assignment_01/driver/gemm_driver.cpp assignment_01/src/*.cpp -o gemm_driver");
+        {
+            cout << "\nCompiling GEMM Driver...\n";
+            int status = system("g++ assignment_01/driver/gemm_driver.cpp assignment_01/src/matrix.cpp assignment_01/src/gemm.cpp assignment_01/src/timer.cpp -o gemm_driver.exe");
+            if (status == 0)
+            {
+                cout << "GEMM Driver compiled successfully.\n";
+            }
+            else
+            {
+                cout << "Compilation failed.\n";
+            }
             break;
+        }
 
         case 2:
         {
@@ -79,9 +89,19 @@ int main()
 
         case 4:
 
-            system("g++ assignment_01/driver/csr_driver.cpp assignment_01/src/*.cpp -o csr_driver");
-
+        {
+            cout << "\nCompiling CSR Driver...\n";
+            int status = system("g++ assignment_01/driver/csr_driver.cpp assignment_01/src/graph.cpp assignment_01/src/edge.cpp assignment_01/src/csr.cpp assignment_01/src/timer.cpp -o csr_driver.exe");
+            if (status == 0)
+            {
+                cout << "CSR Driver compiled successfully.\n";
+            }
+            else
+            {
+                cout << "Compilation failed.\n";
+            }
             break;
+        }
 
         case 5:
         {
@@ -103,7 +123,7 @@ int main()
         }
 
         case 6:
-
+        {
             for (int i = 1; i <= 10; i++)
             {
                 string command =
@@ -114,17 +134,22 @@ int main()
             }
 
             break;
-
+        }
         case 7:
-
-            system("g++ assignment_01/driver/gemm_driver.cpp assignment_01/src/*.cpp -o gemm_driver");
-
-            system("g++ assignment_01/driver/csr_driver.cpp assignment_01/src/*.cpp -o csr_driver");
-
-            cout << "Compilation Complete.\n";
-
+        {
+            cout << "\nCompiling all drivers...\n";
+            int gemmStatus = system("g++ assignment_01/driver/gemm_driver.cpp assignment_01/src/matrix.cpp assignment_01/src/gemm.cpp assignment_01/src/timer.cpp -o gemm_driver.exe");
+            int csrStatus = system("g++ assignment_01/driver/csr_driver.cpp assignment_01/src/graph.cpp assignment_01/src/edge.cpp assignment_01/src/csr.cpp assignment_01/src/timer.cpp -o csr_driver.exe");
+            if (gemmStatus == 0 && csrStatus == 0)
+            {
+                cout << "All drivers compiled successfully.\n";
+            }
+            else
+            {
+                cout << "One or more compilations failed.\n";
+            }
             break;
-
+        }
         case 8:
 
             return 0;

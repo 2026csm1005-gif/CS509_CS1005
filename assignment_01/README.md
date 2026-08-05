@@ -126,9 +126,7 @@ For matrices:
 
 the output matrix **C** has dimensions **M × N**, where each element is computed as:
 
-[
-C[i][j] = \sum\_{k=0}^{K-1} A[i][k] \times B[k][j]
-]
+C[i][j] = Σ(k = 0 to K - 1) A[i][k] × B[k][j]
 
 Two implementations have been developed:
 
