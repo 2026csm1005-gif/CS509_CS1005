@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include "../include/edge.h"
-
+#include "../include/csr.h"
 #include "../include/graph.h"
 
 using namespace std;
@@ -19,6 +19,8 @@ int main()
     printGraph(graph);
     vector<Edge> edgeList = createEdgeList(graph);
     printEdgeList(edgeList);
+    CSR csr = createCSR(edgeList, graph.vertices);
+    printCSR(csr);
     inputFile.close();
     return 0;
 }
