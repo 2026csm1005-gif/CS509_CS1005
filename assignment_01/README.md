@@ -105,6 +105,8 @@ The repository contains a **common wrapper** that serves as a single interface f
 
 The wrapper invokes the dedicated driver program for each assignment and does **not** replace the individual driver implementations.
 
+Note: Wrapper should be executed from Root Directory, ex: common_wrapper\wrapper.exe from Root Directory.
+
 ---
 
 # Assignment 01 – General Matrix Multiplication (GEMM)
@@ -511,7 +513,7 @@ or on Linux
 | Single | csr_test_07.txt | Adjacency List → CSR | V = 5, E = 5     | Correct CSR arrays | Matched       | 0.000000 ms      |
 | Single | csr_test_08.txt | Adjacency List → CSR | V = 4, E = 6     | Correct CSR arrays | Matched       | 0.000000 ms      |
 | Single | csr_test_09.txt | Adjacency List → CSR | V = 1000, E = 10000   | Correct CSR arrays | Matched       | 0.998000 ms      |
-| Single | csr_test_10.txt | Adjacency List → CSR | V = 2500, E = 7500 | Correct CSR arrays | Matched       | 1.357000 ms      |
+| Single | csr_test_010.txt | Adjacency List → CSR | V = 2500, E = 7500 | Correct CSR arrays | Matched       | 1.357000 ms      |
 
 ---
 
