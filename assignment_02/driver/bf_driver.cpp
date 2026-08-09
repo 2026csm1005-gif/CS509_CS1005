@@ -52,20 +52,27 @@ int main(int argc, char *argv[])
         cout << "Negative cycle: detected\n";
     else
     {
-        cout << left << setw(10) << "Vertex" << "Distance\n";
-        cout << "-------------------------\n";
-        for (int vertex = 0; vertex < graph.vertices; vertex++)
+        if (graph.vertices <= 100) // Print complete distance table only for small test cases.
         {
-            cout << left << setw(10) << vertex;
-            if (result.distance[vertex] == numeric_limits<int>::max())
-                cout << "INF\n";
-            else
-                cout << result.distance[vertex] << '\n';
+            cout << left << setw(10) << "Vertex" << "Distance\n";
+            cout << "-------------------------\n";
+            for (int vertex = 0; vertex < graph.vertices; vertex++)
+            {
+                cout << left << setw(10) << vertex;
+                if (result.distance[vertex] == numeric_limits<int>::max())
+                    cout << "INF\n";
+                else
+                    cout << result.distance[vertex] << '\n';
+            }
+        }
+        else
+        {
+            cout << "Distance table: suppressed for large graph\n";
         }
         cout << "\nNegative cycle: none\n";
     }
     cout << fixed << setprecision(6);
-    cout << "\nBellman-Ford Execution Time : "<< timer.getElapsedTime()<< " ms\n";
+    cout << "\nBellman-Ford Execution Time : " << timer.getElapsedTime() << " ms\n";
     cout << "=========================================\n";
     return 0;
 }
