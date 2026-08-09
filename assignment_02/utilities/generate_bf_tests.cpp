@@ -57,7 +57,7 @@ void generateGraph(int vertices, int edges, const string &filename, unsigned int
 int main()
 {
     const string directory = "assignment_02/tests/bellman_ford/";
-    generateGraph(10, 20, directory + "bf_10.txt", 1001);
+    // generateGraph(10, 20, directory + "bf_10.txt", 1001);        Since Adding Manually.
     generateGraph(100, 300, directory + "bf_100.txt", 1002);
     generateGraph(10000, 30000, directory + "bf_10000.txt", 1003);
     generateGraph(50000, 150000, directory + "bf_50000.txt", 1004);
