@@ -1,7 +1,7 @@
 #ifndef BELLMAN_FORD_H
 #define BELLMAN_FORD_H
 
-#include "csr.h"
+#include "../../assignment_01/include/csr.h"
 #include <vector>
 
 struct BellmanFordResult
