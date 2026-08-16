@@ -1,15 +1,39 @@
-#include "../include/dsu.h"
+#include "../include/mst_graph_reader.h"
+#include "../include/kruskal.h"
+
 #include <iostream>
 
-int main()
+int main(int argc, char *argv[])
 {
-    DSU dsu(5);
+    if (argc != 2)
+    {
+        std::cout << "Usage: kruskal_driver <input_file>\n";
+        return 1;
+    }
 
-    dsu.unite(0, 1);
-    dsu.unite(1, 2);
+    try
+    {
+        MSTAdjListGraph graph = readMSTGraph(argv[1]);
+        MSTResult result = kruskalMST(graph);
 
-    std::cout << (dsu.find(0) == dsu.find(2)) << "\n";
-    std::cout << (dsu.find(3) == dsu.find(4)) << "\n";
+        std::cout << "Algorithm: Kruskal's MST\n";
+        std::cout << "MST edges:\n";
+
+        for (const auto &edge : result.edges)
+        {
+            std::cout << edge.u << " "
+                      << edge.v << " "
+                      << edge.weight << "\n";
+        }
+
+        std::cout << "Total MST weight: "
+                  << result.totalWeight << "\n";
+    }
+    catch (const std::exception &e)
+    {
+        std::cout << e.what() << "\n";
+        return 1;
+    }
 
     return 0;
 }
