@@ -17,17 +17,17 @@ int main(int argc, char *argv[])
         MSTResult result = primMST(graph);
 
         std::cout << "Algorithm: Prim's MST\n";
+        std::cout << "MST edges:\n";
 
-        if (graph.V <= 100)
+        for (const auto &edge : result.edges)
         {
-            std::cout << "MST edges:\n";
-
-            for (const auto &edge : result.edges)
-            {
-                std::cout << edge.u << " " << edge.v << " " << edge.weight << "\n";
-            }
+            std::cout << edge.u << " "
+                      << edge.v << " "
+                      << edge.weight << "\n";
         }
-        std::cout << "Total MST weight: " << result.totalWeight << "\n";
+
+        std::cout << "Total MST weight: "
+                  << result.totalWeight << "\n";
     }
     catch (const std::exception &e)
     {

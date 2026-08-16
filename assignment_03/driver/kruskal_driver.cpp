@@ -17,17 +17,17 @@ int main(int argc, char *argv[])
         MSTResult result = kruskalMST(graph);
 
         std::cout << "Algorithm: Kruskal's MST\n";
-        if (graph.V <= 100)
-        {
-            std::cout << "MST edges:\n";
+        std::cout << "MST edges:\n";
 
-            for (const auto &edge : result.edges)
-            {
-                std::cout << edge.u << " " << edge.v << " " << edge.weight << "\n";
-            }
+        for (const auto &edge : result.edges)
+        {
+            std::cout << edge.u << " "
+                      << edge.v << " "
+                      << edge.weight << "\n";
         }
 
-        std::cout << "Total MST weight: " << result.totalWeight << "\n";
+        std::cout << "Total MST weight: "
+                  << result.totalWeight << "\n";
     }
     catch (const std::exception &e)
     {
