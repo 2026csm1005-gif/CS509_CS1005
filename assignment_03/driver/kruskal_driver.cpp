@@ -1,35 +1,15 @@
-#include "../include/mst_graph_reader.h"
-
+#include "../include/dsu.h"
 #include <iostream>
 
-int main(int argc, char *argv[])
+int main()
 {
-    if (argc != 2)
-    {
-        std::cout << "Usage: kruskal_driver <input_file>\n";
-        return 1;
-    }
+    DSU dsu(5);
 
-    try
-    {
-        MSTAdjListGraph graph = readMSTGraph(argv[1]);
+    dsu.unite(0, 1);
+    dsu.unite(1, 2);
 
-        std::cout << "Vertices: " << graph.V << "\n";
-        std::cout << "Edges: " << graph.E << "\n";
-
-        for (int u = 0; u < graph.V && u < 10; u++)
-        {
-            std::cout << u << ": ";
-            for (auto &nbr : graph.adj[u])
-                std::cout << "(" << nbr.vertex << "," << nbr.weight << ") ";
-            std::cout << "\n";
-        }
-    }
-    catch (const std::exception &e)
-    {
-        std::cout << e.what() << "\n";
-        return 1;
-    }
+    std::cout << (dsu.find(0) == dsu.find(2)) << "\n";
+    std::cout << (dsu.find(3) == dsu.find(4)) << "\n";
 
     return 0;
 }
