@@ -42,3 +42,19 @@ MSTAdjListGraph readMSTGraph(const std::string &filename)
 
     return graph;
 }
+
+Graph convertToGraph(const MSTAdjListGraph &mstGraph)
+{
+    Graph graph = createGraph(mstGraph.V);
+    graph.edges = mstGraph.E;
+
+    for (int u = 0; u < mstGraph.V; u++)
+    {
+        for (const auto &nbr : mstGraph.adj[u])
+        {
+            graph.adjacencyList[u].push_back({nbr.vertex, nbr.weight});
+        }
+    }
+
+    return graph;
+}

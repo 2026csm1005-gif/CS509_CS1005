@@ -1,6 +1,8 @@
 #include "../include/mst_graph_reader.h"
 #include "../include/prim.h"
 #include "../../assignment_01/include/timer.h"
+#include "../../assignment_01/include/edge.h"
+#include "../../assignment_01/include/csr.h"
 
 #include <iostream>
 #include <iomanip>
@@ -15,11 +17,15 @@ int main(int argc, char *argv[])
 
     try
     {
-        MSTAdjListGraph graph = readMSTGraph(argv[1]);
+        MSTAdjListGraph mstGraph = readMSTGraph(argv[1]);
+        Graph graph = convertToGraph(mstGraph);
+
+        std::vector<Edge> edgeList = createEdgeList(graph);
+        CSR csr = createCSR(edgeList, graph.vertices);
 
         Timer timer;
         timer.start();
-        MSTResult result = primMST(graph);
+        MSTResult result = primMST(csr);
         timer.stop();
         double time = timer.getElapsedTime();
 

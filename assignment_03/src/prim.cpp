@@ -1,14 +1,17 @@
 #include "../include/prim.h"
 
+#include <functional>
 #include <queue>
 #include <vector>
-#include <functional>
 
-MSTResult primMST(const MSTAdjListGraph &graph)
+MSTResult primMST(const CSR &csr)
 {
-    std::vector<bool> visited(graph.V, false);
+    int vertices = csr.rowPtr.size() - 1;
+
+    std::vector<bool> visited(vertices, false);
 
     using PQEdge = std::pair<int, std::pair<int, int>>;
+
     std::priority_queue<
         PQEdge,
         std::vector<PQEdge>,
@@ -20,10 +23,12 @@ MSTResult primMST(const MSTAdjListGraph &graph)
 
     visited[0] = true;
 
-    for (const auto &nbr : graph.adj[0])
-        pq.push({nbr.weight, {0, nbr.vertex}});
+    for (int i = csr.rowPtr[0]; i < csr.rowPtr[1]; i++)
+    {
+        pq.push({csr.values[i], {0, csr.colIdx[i]}});
+    }
 
-    while (!pq.empty() && result.edges.size() < graph.V - 1)
+    while (!pq.empty() && result.edges.size() < vertices - 1)
     {
         auto current = pq.top();
         pq.pop();
@@ -40,10 +45,12 @@ MSTResult primMST(const MSTAdjListGraph &graph)
         result.edges.push_back({u, v, weight});
         result.totalWeight += weight;
 
-        for (const auto &nbr : graph.adj[v])
+        for (int i = csr.rowPtr[v]; i < csr.rowPtr[v + 1]; i++)
         {
-            if (!visited[nbr.vertex])
-                pq.push({nbr.weight, {v, nbr.vertex}});
+            int next = csr.colIdx[i];
+
+            if (!visited[next])
+                pq.push({csr.values[i], {v, next}});
         }
     }
 

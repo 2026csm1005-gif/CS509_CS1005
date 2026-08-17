@@ -2,6 +2,7 @@
 #define KRUSKAL_H
 
 #include "mst_graph_reader.h"
+#include "../../assignment_01/include/csr.h"
 #include <vector>
 
 struct MSTEdge
@@ -17,6 +18,6 @@ struct MSTResult
     long long totalWeight;
 };
 
-MSTResult kruskalMST(const MSTAdjListGraph &graph);
+MSTResult kruskalMST(const CSR &csr);
 
 #endif
