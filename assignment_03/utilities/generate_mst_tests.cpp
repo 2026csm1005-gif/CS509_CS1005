@@ -13,13 +13,12 @@ struct Edge
 
 void generateGraph(const std::string &filename, int V, int E)
 {
-    std::mt19937 rng(42); // fixed seed for reproducibility
+    std::mt19937 rng(42);
     std::uniform_int_distribution<int> weightDist(1, 100);
 
     std::set<std::pair<int, int>> usedEdges;
     std::vector<Edge> edges;
 
-    // Step 1: Create a spanning tree to guarantee connectivity
     for (int v = 1; v < V; v++)
     {
         std::uniform_int_distribution<int> parentDist(0, v - 1);
@@ -29,7 +28,6 @@ void generateGraph(const std::string &filename, int V, int E)
         edges.push_back({u, v, weightDist(rng)});
     }
 
-    // Step 2: Add random edges until reaching E
     std::uniform_int_distribution<int> vertexDist(0, V - 1);
 
     while ((int)edges.size() < E)
@@ -49,7 +47,6 @@ void generateGraph(const std::string &filename, int V, int E)
         edges.push_back({u, v, weightDist(rng)});
     }
 
-    // Build adjacency list
     std::vector<std::vector<std::pair<int, int>>> adj(V);
 
     for (const auto &e : edges)
@@ -58,7 +55,6 @@ void generateGraph(const std::string &filename, int V, int E)
         adj[e.v].push_back({e.u, e.w});
     }
 
-    // Write file
     std::ofstream fout(filename);
 
     fout << V << " " << E << "\n";

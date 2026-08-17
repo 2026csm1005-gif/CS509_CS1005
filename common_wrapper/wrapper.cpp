@@ -99,6 +99,95 @@ bool compileAssignment2()
     return allSuccessful;
 }
 
+// Assignment 3 compilation
+bool compileAssignment3(bool includeGenerator = true)
+{
+    cout << "\n=========================================\n";
+    cout << "        COMPILING ASSIGNMENT 3\n";
+    cout << "=========================================\n";
+
+    bool allSuccessful = true;
+
+    // Kruskal MST
+    if (!fileExists("assignment_03/driver/kruskal_driver.cpp") ||
+        !fileExists("assignment_03/src/kruskal.cpp") ||
+        !fileExists("assignment_03/src/dsu.cpp") ||
+        !fileExists("assignment_03/src/mst_graph_reader.cpp") ||
+        !fileExists("assignment_01/src/csr.cpp") ||
+        !fileExists("assignment_01/src/graph.cpp") ||
+        !fileExists("assignment_01/src/edge.cpp") ||
+        !fileExists("assignment_01/src/timer.cpp"))
+    {
+        cout << "Error: Required Kruskal source file is unavailable.\n";
+        allSuccessful = false;
+    }
+    else
+    {
+        string command =
+            "g++ assignment_03/driver/kruskal_driver.cpp "
+            "assignment_03/src/kruskal.cpp "
+            "assignment_03/src/dsu.cpp "
+            "assignment_03/src/mst_graph_reader.cpp "
+            "assignment_01/src/csr.cpp "
+            "assignment_01/src/graph.cpp "
+            "assignment_01/src/edge.cpp "
+            "assignment_01/src/timer.cpp "
+            "-o kruskal_driver.exe";
+
+        if (!compileCommand("Assignment 3 - Kruskal MST", command))
+            allSuccessful = false;
+    }
+
+    // Prim MST
+    if (!fileExists("assignment_03/driver/prim_driver.cpp") ||
+        !fileExists("assignment_03/src/prim.cpp") ||
+        !fileExists("assignment_03/src/mst_graph_reader.cpp") ||
+        !fileExists("assignment_01/src/csr.cpp") ||
+        !fileExists("assignment_01/src/graph.cpp") ||
+        !fileExists("assignment_01/src/edge.cpp") ||
+        !fileExists("assignment_01/src/timer.cpp"))
+    {
+        cout << "Error: Required Prim source file is unavailable.\n";
+        allSuccessful = false;
+    }
+    else
+    {
+        string command =
+            "g++ assignment_03/driver/prim_driver.cpp "
+            "assignment_03/src/prim.cpp "
+            "assignment_03/src/mst_graph_reader.cpp "
+            "assignment_01/src/csr.cpp "
+            "assignment_01/src/graph.cpp "
+            "assignment_01/src/edge.cpp "
+            "assignment_01/src/timer.cpp "
+            "-o prim_driver.exe";
+
+        if (!compileCommand("Assignment 3 - Prim MST", command))
+            allSuccessful = false;
+    }
+
+    // MST Test Generator (compile only when requested)
+    if (includeGenerator)
+    {
+        if (!fileExists("assignment_03/utilities/generate_mst_tests.cpp"))
+        {
+            cout << "Error: MST generator source file is unavailable.\n";
+            allSuccessful = false;
+        }
+        else
+        {
+            string command =
+                "g++ -std=c++17 assignment_03/utilities/generate_mst_tests.cpp "
+                "-o generate_mst_tests.exe";
+
+            if (!compileCommand("Assignment 3 - MST Test Generator", command))
+                allSuccessful = false;
+        }
+    }
+
+    return allSuccessful;
+}
+
 // Display available algorithms
 void displayAlgorithms()
 {
@@ -113,6 +202,10 @@ void displayAlgorithms()
     cout << "\nAssignment 2\n";
     cout << "  3. Bellman-Ford\n";
     cout << "  4. Floyd-Warshall\n";
+
+    cout << "\nAssignment 3\n";
+    cout << "  5. Kruskal MST\n";
+    cout << "  6. Prim MST\n";
 
     cout << "\n=========================================\n";
 }
@@ -174,6 +267,18 @@ bool getAlgorithmInfo(
         executable = "fw_driver.exe";
         return true;
 
+    case 5:
+        algorithmName = "Kruskal MST";
+        testDirectory = "assignment_03/tests/mst";
+        executable = "kruskal_driver.exe";
+        return true;
+
+    case 6:
+        algorithmName = "Prim MST";
+        testDirectory = "assignment_03/tests/mst";
+        executable = "prim_driver.exe";
+        return true;
+
     default:
         return false;
     }
@@ -192,7 +297,9 @@ void runOneTest()
     cout << "2. CSR\n";
     cout << "3. Bellman-Ford\n";
     cout << "4. Floyd-Warshall\n";
-    cout << "5. Back\n";
+    cout << "5. Kruskal MST\n";
+    cout << "6. Prim MST\n";
+    cout << "7. Back\n";
 
     cout << "\nEnter choice: ";
 
@@ -200,23 +307,21 @@ void runOneTest()
     {
         cin.clear();
         cin.ignore(10000, '\n');
-
         cout << "Error: Invalid input.\n";
         return;
     }
 
-    if (choice == 5)
+    if (choice == 7)
         return;
 
     string algorithmName;
     string testDirectory;
     string executable;
 
-    if (!getAlgorithmInfo(
-            choice,
-            algorithmName,
-            testDirectory,
-            executable))
+    if (!getAlgorithmInfo(choice,
+                          algorithmName,
+                          testDirectory,
+                          executable))
     {
         cout << "Error: Invalid algorithm choice.\n";
         return;
@@ -226,26 +331,20 @@ void runOneTest()
     {
         cout << "Error: Executable unavailable: "
              << executable << '\n';
-
-        cout << "Please compile the corresponding "
-                "assignment first.\n";
-
+        cout << "Please compile the corresponding assignment first.\n";
         return;
     }
 
-    vector<string> testFiles =
-        getTestFiles(testDirectory);
+    vector<string> testFiles = getTestFiles(testDirectory);
 
     if (testFiles.empty())
     {
         cout << "Error: No test files found in: "
              << testDirectory << '\n';
-
         return;
     }
 
-    cout << "\nAvailable " << algorithmName
-         << " test files:\n\n";
+    cout << "\nAvailable " << algorithmName << " test files:\n\n";
 
     for (size_t i = 0; i < testFiles.size(); i++)
     {
@@ -254,8 +353,7 @@ void runOneTest()
              << '\n';
     }
 
-    cout << testFiles.size() + 1
-         << ". Back\n";
+    cout << testFiles.size() + 1 << ". Back\n";
 
     int testChoice;
 
@@ -265,7 +363,6 @@ void runOneTest()
     {
         cin.clear();
         cin.ignore(10000, '\n');
-
         cout << "Error: Invalid input.\n";
         return;
     }
@@ -280,8 +377,7 @@ void runOneTest()
         return;
     }
 
-    string selectedTest =
-        testFiles[testChoice - 1];
+    string selectedTest = testFiles[testChoice - 1];
 
     cout << "\n=========================================\n";
     cout << "Running: " << algorithmName << '\n';
@@ -296,13 +392,9 @@ void runOneTest()
     int result = system(command.c_str());
 
     if (result != 0)
-    {
         cout << "\nError: Test execution failed.\n";
-    }
     else
-    {
         cout << "\nTest completed successfully.\n";
-    }
 }
 
 // Run all tests for one algorithm
@@ -448,6 +540,34 @@ bool runAllAssignment2Tests()
     return success;
 }
 
+// Run all tests for Assignment 3
+bool runAllAssignment3Tests()
+{
+    bool success = true;
+
+    cout << "\n=========================================\n";
+    cout << "       RUNNING ASSIGNMENT 3 TESTS\n";
+    cout << "=========================================\n";
+
+    if (!runAllAlgorithmTests(
+            "Kruskal MST",
+            "assignment_03/tests/mst",
+            "kruskal_driver.exe"))
+    {
+        success = false;
+    }
+
+    if (!runAllAlgorithmTests(
+            "Prim MST",
+            "assignment_03/tests/mst",
+            "prim_driver.exe"))
+    {
+        success = false;
+    }
+
+    return success;
+}
+
 // Select assignment and run all tests
 void runAllTestsForAssignment()
 {
@@ -459,7 +579,8 @@ void runAllTestsForAssignment()
 
     cout << "1. Assignment 1\n";
     cout << "2. Assignment 2\n";
-    cout << "3. Back\n";
+    cout << "3. Assignment 3\n";
+    cout << "4. Back\n";
 
     cout << "\nEnter choice: ";
 
@@ -467,15 +588,12 @@ void runAllTestsForAssignment()
     {
         cin.clear();
         cin.ignore(10000, '\n');
-
         cout << "Error: Invalid input.\n";
         return;
     }
 
-    if (choice == 3)
-    {
+    if (choice == 4)
         return;
-    }
 
     bool success = false;
 
@@ -489,6 +607,10 @@ void runAllTestsForAssignment()
         success = runAllAssignment2Tests();
         break;
 
+    case 3:
+        success = runAllAssignment3Tests();
+        break;
+
     default:
         cout << "Error: Invalid assignment choice.\n";
         return;
@@ -497,15 +619,9 @@ void runAllTestsForAssignment()
     cout << "\n=========================================\n";
 
     if (success)
-    {
-        cout << "All tests for the selected assignment "
-                "completed successfully.\n";
-    }
+        cout << "All tests for the selected assignment completed successfully.\n";
     else
-    {
-        cout << "Some tests for the selected assignment "
-                "failed.\n";
-    }
+        cout << "Some tests for the selected assignment failed.\n";
 
     cout << "=========================================\n";
 }
@@ -555,14 +671,31 @@ void runAllSubmittedAlgorithms()
         allSuccessful = false;
     }
 
+    // Assignment 3 - Kruskal MST
+    if (!runAllAlgorithmTests(
+            "Kruskal MST",
+            "assignment_03/tests/mst",
+            "kruskal_driver.exe"))
+    {
+        allSuccessful = false;
+    }
+
+    // Assignment 3 - Prim MST
+    if (!runAllAlgorithmTests(
+            "Prim MST",
+            "assignment_03/tests/mst",
+            "prim_driver.exe"))
+    {
+        allSuccessful = false;
+    }
+
     cout << "\n=========================================\n";
     cout << "       ALL ALGORITHMS SUMMARY\n";
     cout << "=========================================\n";
 
     if (allSuccessful)
     {
-        cout << "Result: ALL SUBMITTED ALGORITHMS "
-                "COMPLETED SUCCESSFULLY\n";
+        cout << "Result: ALL SUBMITTED ALGORITHMS COMPLETED SUCCESSFULLY\n";
     }
     else
     {
@@ -583,7 +716,8 @@ void compileAssignment()
 
     cout << "1. Assignment 1\n";
     cout << "2. Assignment 2\n";
-    cout << "3. Back\n";
+    cout << "3. Assignment 3\n";
+    cout << "4. Back\n";
 
     cout << "\nEnter choice: ";
 
@@ -591,7 +725,6 @@ void compileAssignment()
     {
         cin.clear();
         cin.ignore(10000, '\n');
-
         cout << "Error: Invalid input.\n";
         return;
     }
@@ -609,6 +742,10 @@ void compileAssignment()
         break;
 
     case 3:
+        success = compileAssignment3();
+        break;
+
+    case 4:
         return;
 
     default:
@@ -637,6 +774,7 @@ void compileAllAssignments()
 
     bool assignment1Success = compileAssignment1();
     bool assignment2Success = compileAssignment2();
+    bool assignment3Success = compileAssignment3(false);
 
     cout << "\n=========================================\n";
     cout << "        OVERALL COMPILATION STATUS\n";
@@ -650,7 +788,13 @@ void compileAllAssignments()
          << (assignment2Success ? "SUCCESS" : "FAILED")
          << '\n';
 
-    if (assignment1Success && assignment2Success)
+    cout << "Assignment 3 : "
+         << (assignment3Success ? "SUCCESS" : "FAILED")
+         << '\n';
+
+    if (assignment1Success &&
+        assignment2Success &&
+        assignment3Success)
     {
         cout << "\nResult: ALL ASSIGNMENTS COMPILED SUCCESSFULLY\n";
     }
@@ -688,9 +832,7 @@ int main()
             cin.clear();
             cin.ignore(10000, '\n');
 
-            cout << "Error: Invalid input. "
-                    "Please enter a number.\n";
-
+            cout << "Error: Invalid input. Please enter a number.\n";
             continue;
         }
 
