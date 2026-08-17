@@ -32,8 +32,15 @@ int main(int argc, char *argv[])
         std::cout << "Algorithm: Kruskal's MST\n";
         std::cout << "MST edges:\n";
 
-        for (const auto &edge : result.edges)
-            std::cout << edge.u << " " << edge.v << " " << edge.weight << "\n";
+        if (graph.vertices <= 100)
+        {
+            for (const auto &edge : result.edges)
+                std::cout << edge.u << " " << edge.v << " " << edge.weight << "\n";
+        }
+        else
+        {
+            std::cout << "(suppressed for large graph)\n";
+        }
 
         std::cout << "Total MST weight: " << result.totalWeight << "\n";
         std::cout << std::fixed << std::setprecision(6);
