@@ -33,7 +33,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // Preprocessing: not timed.
     vector<Edge> edgeList =
         createEdgeList(graph);
 
@@ -44,7 +43,6 @@ int main(int argc, char *argv[])
 
     Timer timer;
 
-    // Start timing ONLY before algorithm.
     timer.start();
 
     ColoringResult result =
