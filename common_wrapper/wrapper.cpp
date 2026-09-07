@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 
-using namespace std;
+    using namespace std;
 namespace fs = std::filesystem;
 
 // Utility: check whether a file exists
@@ -19,87 +19,184 @@ bool compileCommand(const string &description, const string &command)
     cout << "\n-----------------------------------------\n";
     cout << "Compiling: " << description << '\n';
     cout << "-----------------------------------------\n";
+
     int result = system(command.c_str());
+
     if (result != 0)
     {
-        cout << "Error: Compilation failed for " << description << ".\n";
+        cout << "Error: Compilation failed for "
+             << description << ".\n";
         return false;
     }
-    cout << "Compilation successful: " << description << '\n';
+
+    cout << "Compilation successful: "
+         << description << '\n';
+
     return true;
 }
 
+// ============================================================
 // Assignment 1 compilation
+// ============================================================
+
 bool compileAssignment1()
 {
     cout << "\n=========================================\n";
     cout << "        COMPILING ASSIGNMENT 1\n";
     cout << "=========================================\n";
+
     bool allSuccessful = true;
+
+    // --------------------------------------------------------
     // GEMM
-    if (!fileExists("assignment_01/driver/gemm_driver.cpp") || !fileExists("assignment_01/src/gemm.cpp") || !fileExists("assignment_01/src/matrix.cpp") || !fileExists("assignment_01/src/timer.cpp"))
+    // --------------------------------------------------------
+
+    if (!fileExists("assignment_01/driver/gemm_driver.cpp") ||
+        !fileExists("assignment_01/src/gemm.cpp") ||
+        !fileExists("assignment_01/src/matrix.cpp") ||
+        !fileExists("assignment_01/src/timer.cpp"))
     {
         cout << "Error: Required GEMM source file is unavailable.\n";
         allSuccessful = false;
     }
     else
     {
-        string command = "g++ assignment_01/driver/gemm_driver.cpp assignment_01/src/gemm.cpp assignment_01/src/matrix.cpp assignment_01/src/timer.cpp -o gemm_driver.exe";
-        if (!compileCommand("Assignment 1 - GEMM", command))
+        string command =
+            "g++ assignment_01/driver/gemm_driver.cpp "
+            "assignment_01/src/gemm.cpp "
+            "assignment_01/src/matrix.cpp "
+            "assignment_01/src/timer.cpp "
+            "-o gemm_driver.exe";
+
+        if (!compileCommand(
+                "Assignment 1 - GEMM",
+                command))
+        {
             allSuccessful = false;
+        }
     }
+
+    // --------------------------------------------------------
     // CSR
-    if (!fileExists("assignment_01/driver/csr_driver.cpp") || !fileExists("assignment_01/src/csr.cpp") || !fileExists("assignment_01/src/graph.cpp") || !fileExists("assignment_01/src/edge.cpp") || !fileExists("assignment_01/src/timer.cpp"))
+    // --------------------------------------------------------
+
+    if (!fileExists("assignment_01/driver/csr_driver.cpp") ||
+        !fileExists("assignment_01/src/csr.cpp") ||
+        !fileExists("assignment_01/src/graph.cpp") ||
+        !fileExists("assignment_01/src/edge.cpp") ||
+        !fileExists("assignment_01/src/timer.cpp"))
     {
         cout << "Error: Required CSR source file is unavailable.\n";
         allSuccessful = false;
     }
     else
     {
-        string command = "g++ assignment_01/driver/csr_driver.cpp assignment_01/src/csr.cpp assignment_01/src/graph.cpp assignment_01/src/edge.cpp assignment_01/src/timer.cpp -o csr_driver.exe";
-        if (!compileCommand("Assignment 1 - CSR", command))
+        string command =
+            "g++ assignment_01/driver/csr_driver.cpp "
+            "assignment_01/src/csr.cpp "
+            "assignment_01/src/graph.cpp "
+            "assignment_01/src/edge.cpp "
+            "assignment_01/src/timer.cpp "
+            "-o csr_driver.exe";
+
+        if (!compileCommand(
+                "Assignment 1 - CSR",
+                command))
+        {
             allSuccessful = false;
+        }
     }
+
     return allSuccessful;
 }
 
+// ============================================================
 // Assignment 2 compilation
+// ============================================================
+
 bool compileAssignment2()
 {
     cout << "\n=========================================\n";
     cout << "        COMPILING ASSIGNMENT 2\n";
     cout << "=========================================\n";
+
     bool allSuccessful = true;
+
+    // --------------------------------------------------------
     // Bellman-Ford
-    if (!fileExists("assignment_02/driver/bf_driver.cpp") || !fileExists("assignment_02/src/bellman_ford.cpp") || !fileExists("assignment_02/src/bf_graph_reader.cpp") || !fileExists("assignment_01/src/csr.cpp") || !fileExists("assignment_01/src/graph.cpp") || !fileExists("assignment_01/src/edge.cpp") || !fileExists("assignment_01/src/timer.cpp"))
+    // --------------------------------------------------------
+
+    if (!fileExists("assignment_02/driver/bf_driver.cpp") ||
+        !fileExists("assignment_02/src/bellman_ford.cpp") ||
+        !fileExists("assignment_02/src/bf_graph_reader.cpp") ||
+        !fileExists("assignment_01/src/csr.cpp") ||
+        !fileExists("assignment_01/src/graph.cpp") ||
+        !fileExists("assignment_01/src/edge.cpp") ||
+        !fileExists("assignment_01/src/timer.cpp"))
     {
-        cout << "Error: Required Bellman-Ford source file is unavailable.\n";
+        cout << "Error: Required Bellman-Ford source file "
+                "is unavailable.\n";
+
         allSuccessful = false;
     }
     else
     {
-        string command = "g++ assignment_02/driver/bf_driver.cpp assignment_02/src/bellman_ford.cpp assignment_02/src/bf_graph_reader.cpp assignment_01/src/csr.cpp assignment_01/src/graph.cpp assignment_01/src/edge.cpp assignment_01/src/timer.cpp -o bf_driver.exe";
-        if (!compileCommand("Assignment 2 - Bellman-Ford", command))
-            allSuccessful = false;
-    }
-    // Floyd-Warshall
-    if (!fileExists("assignment_02/driver/fw_driver.cpp") || !fileExists("assignment_02/src/floyd_warshall.cpp") || !fileExists("assignment_02/src/fw_matrix_reader.cpp") || !fileExists("assignment_01/src/timer.cpp"))
-    {
-        cout << "Error: Required Floyd-Warshall source file is unavailable.\n";
-        allSuccessful = false;
-    }
-    else
-    {
-        string command = "g++ assignment_02/driver/fw_driver.cpp assignment_02/src/floyd_warshall.cpp assignment_02/src/fw_matrix_reader.cpp assignment_01/src/timer.cpp -o fw_driver.exe";
-        if (!compileCommand("Assignment 2 - Floyd-Warshall", command))
+        string command =
+            "g++ assignment_02/driver/bf_driver.cpp "
+            "assignment_02/src/bellman_ford.cpp "
+            "assignment_02/src/bf_graph_reader.cpp "
+            "assignment_01/src/csr.cpp "
+            "assignment_01/src/graph.cpp "
+            "assignment_01/src/edge.cpp "
+            "assignment_01/src/timer.cpp "
+            "-o bf_driver.exe";
+
+        if (!compileCommand(
+                "Assignment 2 - Bellman-Ford",
+                command))
         {
             allSuccessful = false;
         }
     }
+
+    // --------------------------------------------------------
+    // Floyd-Warshall
+    // --------------------------------------------------------
+
+    if (!fileExists("assignment_02/driver/fw_driver.cpp") ||
+        !fileExists("assignment_02/src/floyd_warshall.cpp") ||
+        !fileExists("assignment_02/src/fw_matrix_reader.cpp") ||
+        !fileExists("assignment_01/src/timer.cpp"))
+    {
+        cout << "Error: Required Floyd-Warshall source file "
+                "is unavailable.\n";
+
+        allSuccessful = false;
+    }
+    else
+    {
+        string command =
+            "g++ assignment_02/driver/fw_driver.cpp "
+            "assignment_02/src/floyd_warshall.cpp "
+            "assignment_02/src/fw_matrix_reader.cpp "
+            "assignment_01/src/timer.cpp "
+            "-o fw_driver.exe";
+
+        if (!compileCommand(
+                "Assignment 2 - Floyd-Warshall",
+                command))
+        {
+            allSuccessful = false;
+        }
+    }
+
     return allSuccessful;
 }
 
+// ============================================================
 // Assignment 3 compilation
+// ============================================================
+
 bool compileAssignment3(bool includeGenerator = true)
 {
     cout << "\n=========================================\n";
@@ -108,17 +205,20 @@ bool compileAssignment3(bool includeGenerator = true)
 
     bool allSuccessful = true;
 
-    // Kruskal MST
+    // --------------------------------------------------------
+    // Kruskal
+    // --------------------------------------------------------
+
     if (!fileExists("assignment_03/driver/kruskal_driver.cpp") ||
         !fileExists("assignment_03/src/kruskal.cpp") ||
-        !fileExists("assignment_03/src/dsu.cpp") ||
-        !fileExists("assignment_03/src/mst_graph_reader.cpp") ||
         !fileExists("assignment_01/src/csr.cpp") ||
         !fileExists("assignment_01/src/graph.cpp") ||
         !fileExists("assignment_01/src/edge.cpp") ||
         !fileExists("assignment_01/src/timer.cpp"))
     {
-        cout << "Error: Required Kruskal source file is unavailable.\n";
+        cout << "Error: Required Kruskal source file "
+                "is unavailable.\n";
+
         allSuccessful = false;
     }
     else
@@ -126,28 +226,34 @@ bool compileAssignment3(bool includeGenerator = true)
         string command =
             "g++ assignment_03/driver/kruskal_driver.cpp "
             "assignment_03/src/kruskal.cpp "
-            "assignment_03/src/dsu.cpp "
-            "assignment_03/src/mst_graph_reader.cpp "
             "assignment_01/src/csr.cpp "
             "assignment_01/src/graph.cpp "
             "assignment_01/src/edge.cpp "
             "assignment_01/src/timer.cpp "
             "-o kruskal_driver.exe";
 
-        if (!compileCommand("Assignment 3 - Kruskal MST", command))
+        if (!compileCommand(
+                "Assignment 3 - Kruskal",
+                command))
+        {
             allSuccessful = false;
+        }
     }
 
-    // Prim MST
+    // --------------------------------------------------------
+    // Prim
+    // --------------------------------------------------------
+
     if (!fileExists("assignment_03/driver/prim_driver.cpp") ||
         !fileExists("assignment_03/src/prim.cpp") ||
-        !fileExists("assignment_03/src/mst_graph_reader.cpp") ||
         !fileExists("assignment_01/src/csr.cpp") ||
         !fileExists("assignment_01/src/graph.cpp") ||
         !fileExists("assignment_01/src/edge.cpp") ||
         !fileExists("assignment_01/src/timer.cpp"))
     {
-        cout << "Error: Required Prim source file is unavailable.\n";
+        cout << "Error: Required Prim source file "
+                "is unavailable.\n";
+
         allSuccessful = false;
     }
     else
@@ -155,40 +261,210 @@ bool compileAssignment3(bool includeGenerator = true)
         string command =
             "g++ assignment_03/driver/prim_driver.cpp "
             "assignment_03/src/prim.cpp "
-            "assignment_03/src/mst_graph_reader.cpp "
             "assignment_01/src/csr.cpp "
             "assignment_01/src/graph.cpp "
             "assignment_01/src/edge.cpp "
             "assignment_01/src/timer.cpp "
             "-o prim_driver.exe";
 
-        if (!compileCommand("Assignment 3 - Prim MST", command))
+        if (!compileCommand(
+                "Assignment 3 - Prim",
+                command))
+        {
             allSuccessful = false;
+        }
     }
 
-    // MST Test Generator (compile only when requested)
+    // --------------------------------------------------------
+    // Assignment 3 test generator
+    // --------------------------------------------------------
+
     if (includeGenerator)
     {
-        if (!fileExists("assignment_03/utilities/generate_mst_tests.cpp"))
+        if (!fileExists(
+                "assignment_03/utilities/"
+                "generate_mst_tests.cpp"))
         {
-            cout << "Error: MST generator source file is unavailable.\n";
-            allSuccessful = false;
+            cout << "Warning: Assignment 3 test generator "
+                    "is unavailable.\n";
         }
         else
         {
             string command =
-                "g++ -std=c++17 assignment_03/utilities/generate_mst_tests.cpp "
+                "g++ assignment_03/utilities/"
+                "generate_mst_tests.cpp "
                 "-o generate_mst_tests.exe";
 
-            if (!compileCommand("Assignment 3 - MST Test Generator", command))
-                allSuccessful = false;
+            compileCommand(
+                "Assignment 3 - Test Generator",
+                command);
         }
     }
 
     return allSuccessful;
 }
 
+// ============================================================
+// Assignment 4 compilation
+// ============================================================
+
+bool compileAssignment4()
+{
+    cout << "\n=========================================\n";
+    cout << "        COMPILING ASSIGNMENT 4\n";
+    cout << "=========================================\n";
+
+    bool allSuccessful = true;
+
+    // --------------------------------------------------------
+    // Welsh-Powell Vertex Coloring
+    // --------------------------------------------------------
+
+    if (!fileExists(
+            "assignment_04/driver/"
+            "vertex_coloring_driver.cpp") ||
+        !fileExists(
+            "assignment_04/src/"
+            "vertex_coloring.cpp") ||
+        !fileExists(
+            "assignment_04/src/"
+            "a4_graph_reader.cpp") ||
+        !fileExists(
+            "assignment_01/src/"
+            "csr.cpp") ||
+        !fileExists(
+            "assignment_01/src/"
+            "graph.cpp") ||
+        !fileExists(
+            "assignment_01/src/"
+            "edge.cpp") ||
+        !fileExists(
+            "assignment_01/src/"
+            "timer.cpp"))
+    {
+        cout << "Error: Required Vertex Coloring source "
+                "file is unavailable.\n";
+
+        allSuccessful = false;
+    }
+    else
+    {
+        string command =
+            "g++ -std=c++17 "
+            "assignment_04/driver/"
+            "vertex_coloring_driver.cpp "
+            "assignment_04/src/"
+            "vertex_coloring.cpp "
+            "assignment_04/src/"
+            "a4_graph_reader.cpp "
+            "assignment_01/src/"
+            "csr.cpp "
+            "assignment_01/src/"
+            "graph.cpp "
+            "assignment_01/src/"
+            "edge.cpp "
+            "assignment_01/src/"
+            "timer.cpp "
+            "-o vertex_coloring_driver.exe";
+
+        if (!compileCommand(
+                "Assignment 4 - Welsh-Powell Vertex Coloring",
+                command))
+        {
+            allSuccessful = false;
+        }
+    }
+
+    // --------------------------------------------------------
+    // PageRank
+    // --------------------------------------------------------
+
+    if (!fileExists(
+            "assignment_04/driver/"
+            "pagerank_driver.cpp") ||
+        !fileExists(
+            "assignment_04/src/"
+            "pagerank.cpp") ||
+        !fileExists(
+            "assignment_04/src/"
+            "a4_graph_reader.cpp") ||
+        !fileExists(
+            "assignment_01/src/"
+            "csr.cpp") ||
+        !fileExists(
+            "assignment_01/src/"
+            "graph.cpp") ||
+        !fileExists(
+            "assignment_01/src/"
+            "edge.cpp") ||
+        !fileExists(
+            "assignment_01/src/"
+            "timer.cpp"))
+    {
+        cout << "Error: Required PageRank source "
+                "file is unavailable.\n";
+
+        allSuccessful = false;
+    }
+    else
+    {
+        string command =
+            "g++ -std=c++17 "
+            "assignment_04/driver/"
+            "pagerank_driver.cpp "
+            "assignment_04/src/"
+            "pagerank.cpp "
+            "assignment_04/src/"
+            "a4_graph_reader.cpp "
+            "assignment_01/src/"
+            "csr.cpp "
+            "assignment_01/src/"
+            "graph.cpp "
+            "assignment_01/src/"
+            "edge.cpp "
+            "assignment_01/src/"
+            "timer.cpp "
+            "-o pagerank_driver.exe";
+
+        if (!compileCommand(
+                "Assignment 4 - PageRank",
+                command))
+        {
+            allSuccessful = false;
+        }
+    }
+
+    // --------------------------------------------------------
+    // Assignment 4 test generator
+    // --------------------------------------------------------
+
+    if (!fileExists(
+            "assignment_04/utilities/"
+            "generate_a4_tests.cpp"))
+    {
+        cout << "Warning: Assignment 4 test generator "
+                "is unavailable.\n";
+    }
+    else
+    {
+        string command =
+            "g++ -std=c++17 "
+            "assignment_04/utilities/"
+            "generate_a4_tests.cpp "
+            "-o generate_a4_tests.exe";
+
+        compileCommand(
+            "Assignment 4 - Test Generator",
+            command);
+    }
+
+    return allSuccessful;
+}
+
+// ============================================================
 // Display available algorithms
+// ============================================================
+
 void displayAlgorithms()
 {
     cout << "\n=========================================\n";
@@ -207,10 +483,17 @@ void displayAlgorithms()
     cout << "  5. Kruskal MST\n";
     cout << "  6. Prim MST\n";
 
+    cout << "\nAssignment 4\n";
+    cout << "  7. Welsh-Powell Vertex Coloring\n";
+    cout << "  8. PageRank\n";
+
     cout << "\n=========================================\n";
 }
 
+// ============================================================
 // Get test files from a directory
+// ============================================================
+
 vector<string> getTestFiles(const string &directory)
 {
     vector<string> files;
@@ -220,7 +503,8 @@ vector<string> getTestFiles(const string &directory)
         return files;
     }
 
-    for (const auto &entry : fs::directory_iterator(directory))
+    for (const auto &entry :
+         fs::directory_iterator(directory))
     {
         if (entry.is_regular_file() &&
             entry.path().extension() == ".txt")
@@ -234,7 +518,10 @@ vector<string> getTestFiles(const string &directory)
     return files;
 }
 
+// ============================================================
 // Get information for an algorithm
+// ============================================================
+
 bool getAlgorithmInfo(
     int choice,
     string &algorithmName,
@@ -279,12 +566,27 @@ bool getAlgorithmInfo(
         executable = "prim_driver.exe";
         return true;
 
+    case 7:
+        algorithmName = "Welsh-Powell Vertex Coloring";
+        testDirectory = "assignment_04/tests/coloring";
+        executable = "vertex_coloring_driver.exe";
+        return true;
+
+    case 8:
+        algorithmName = "PageRank";
+        testDirectory = "assignment_04/tests/pagerank";
+        executable = "pagerank_driver.exe";
+        return true;
+
     default:
         return false;
     }
 }
 
+// ============================================================
 // Run one selected test
+// ============================================================
+
 void runOneTest()
 {
     int choice;
@@ -299,7 +601,9 @@ void runOneTest()
     cout << "4. Floyd-Warshall\n";
     cout << "5. Kruskal MST\n";
     cout << "6. Prim MST\n";
-    cout << "7. Back\n";
+    cout << "7. Welsh-Powell Vertex Coloring\n";
+    cout << "8. PageRank\n";
+    cout << "9. Back\n";
 
     cout << "\nEnter choice: ";
 
@@ -307,21 +611,25 @@ void runOneTest()
     {
         cin.clear();
         cin.ignore(10000, '\n');
+
         cout << "Error: Invalid input.\n";
         return;
     }
 
-    if (choice == 7)
+    if (choice == 9)
+    {
         return;
+    }
 
     string algorithmName;
     string testDirectory;
     string executable;
 
-    if (!getAlgorithmInfo(choice,
-                          algorithmName,
-                          testDirectory,
-                          executable))
+    if (!getAlgorithmInfo(
+            choice,
+            algorithmName,
+            testDirectory,
+            executable))
     {
         cout << "Error: Invalid algorithm choice.\n";
         return;
@@ -331,29 +639,38 @@ void runOneTest()
     {
         cout << "Error: Executable unavailable: "
              << executable << '\n';
-        cout << "Please compile the corresponding assignment first.\n";
+
+        cout << "Please compile the corresponding "
+                "assignment first.\n";
+
         return;
     }
 
-    vector<string> testFiles = getTestFiles(testDirectory);
+    vector<string> testFiles =
+        getTestFiles(testDirectory);
 
     if (testFiles.empty())
     {
         cout << "Error: No test files found in: "
              << testDirectory << '\n';
+
         return;
     }
 
-    cout << "\nAvailable " << algorithmName << " test files:\n\n";
+    cout << "\nAvailable " << algorithmName
+         << " test files:\n\n";
 
     for (size_t i = 0; i < testFiles.size(); i++)
     {
         cout << i + 1 << ". "
-             << fs::path(testFiles[i]).filename().string()
+             << fs::path(testFiles[i])
+                    .filename()
+                    .string()
              << '\n';
     }
 
-    cout << testFiles.size() + 1 << ". Back\n";
+    cout << testFiles.size() + 1
+         << ". Back\n";
 
     int testChoice;
 
@@ -363,12 +680,16 @@ void runOneTest()
     {
         cin.clear();
         cin.ignore(10000, '\n');
+
         cout << "Error: Invalid input.\n";
         return;
     }
 
-    if (testChoice == static_cast<int>(testFiles.size()) + 1)
+    if (testChoice ==
+        static_cast<int>(testFiles.size()) + 1)
+    {
         return;
+    }
 
     if (testChoice < 1 ||
         testChoice > static_cast<int>(testFiles.size()))
@@ -377,12 +698,15 @@ void runOneTest()
         return;
     }
 
-    string selectedTest = testFiles[testChoice - 1];
+    string selectedTest =
+        testFiles[testChoice - 1];
 
     cout << "\n=========================================\n";
     cout << "Running: " << algorithmName << '\n';
     cout << "Test   : "
-         << fs::path(selectedTest).filename().string()
+         << fs::path(selectedTest)
+                .filename()
+                .string()
          << '\n';
     cout << "=========================================\n";
 
@@ -392,22 +716,29 @@ void runOneTest()
     int result = system(command.c_str());
 
     if (result != 0)
+    {
         cout << "\nError: Test execution failed.\n";
+    }
     else
+    {
         cout << "\nTest completed successfully.\n";
+    }
 }
 
+// ============================================================
 // Run all tests for one algorithm
+// ============================================================
+
 bool runAllAlgorithmTests(
     const string &algorithmName,
     const string &testDirectory,
     const string &executable)
 {
     cout << "\n=========================================\n";
-    cout << "Running all tests: " << algorithmName << '\n';
+    cout << "Running all tests: "
+         << algorithmName << '\n';
     cout << "=========================================\n";
 
-    // Check executable
     if (!fileExists(executable))
     {
         cout << "Error: Executable unavailable: "
@@ -419,7 +750,6 @@ bool runAllAlgorithmTests(
         return false;
     }
 
-    // Get all test files
     vector<string> testFiles =
         getTestFiles(testDirectory);
 
@@ -437,7 +767,9 @@ bool runAllAlgorithmTests(
     for (size_t i = 0; i < testFiles.size(); i++)
     {
         string filename =
-            fs::path(testFiles[i]).filename().string();
+            fs::path(testFiles[i])
+                .filename()
+                .string();
 
         cout << "\n-----------------------------------------\n";
         cout << "Test " << i + 1
@@ -466,9 +798,14 @@ bool runAllAlgorithmTests(
     cout << algorithmName << " Test Summary\n";
     cout << "=========================================\n";
 
-    cout << "Total tests : " << testFiles.size() << '\n';
-    cout << "Passed      : " << passed << '\n';
-    cout << "Failed      : " << failed << '\n';
+    cout << "Total tests : "
+         << testFiles.size() << '\n';
+
+    cout << "Passed      : "
+         << passed << '\n';
+
+    cout << "Failed      : "
+         << failed << '\n';
 
     if (failed == 0)
     {
@@ -484,7 +821,10 @@ bool runAllAlgorithmTests(
     return failed == 0;
 }
 
+// ============================================================
 // Run all tests for Assignment 1
+// ============================================================
+
 bool runAllAssignment1Tests()
 {
     bool success = true;
@@ -512,7 +852,10 @@ bool runAllAssignment1Tests()
     return success;
 }
 
+// ============================================================
 // Run all tests for Assignment 2
+// ============================================================
+
 bool runAllAssignment2Tests()
 {
     bool success = true;
@@ -540,7 +883,10 @@ bool runAllAssignment2Tests()
     return success;
 }
 
+// ============================================================
 // Run all tests for Assignment 3
+// ============================================================
+
 bool runAllAssignment3Tests()
 {
     bool success = true;
@@ -568,7 +914,49 @@ bool runAllAssignment3Tests()
     return success;
 }
 
+// ============================================================
+// Run all tests for Assignment 4
+// ============================================================
+
+bool runAllAssignment4Tests()
+{
+    bool success = true;
+
+    cout << "\n=========================================\n";
+    cout << "       RUNNING ASSIGNMENT 4 TESTS\n";
+    cout << "=========================================\n";
+
+    // --------------------------------------------------------
+    // Welsh-Powell Vertex Coloring
+    // --------------------------------------------------------
+
+    if (!runAllAlgorithmTests(
+            "Welsh-Powell Vertex Coloring",
+            "assignment_04/tests/coloring",
+            "vertex_coloring_driver.exe"))
+    {
+        success = false;
+    }
+
+    // --------------------------------------------------------
+    // PageRank
+    // --------------------------------------------------------
+
+    if (!runAllAlgorithmTests(
+            "PageRank",
+            "assignment_04/tests/pagerank",
+            "pagerank_driver.exe"))
+    {
+        success = false;
+    }
+
+    return success;
+}
+
+// ============================================================
 // Select assignment and run all tests
+// ============================================================
+
 void runAllTestsForAssignment()
 {
     int choice;
@@ -580,7 +968,8 @@ void runAllTestsForAssignment()
     cout << "1. Assignment 1\n";
     cout << "2. Assignment 2\n";
     cout << "3. Assignment 3\n";
-    cout << "4. Back\n";
+    cout << "4. Assignment 4\n";
+    cout << "5. Back\n";
 
     cout << "\nEnter choice: ";
 
@@ -588,12 +977,15 @@ void runAllTestsForAssignment()
     {
         cin.clear();
         cin.ignore(10000, '\n');
+
         cout << "Error: Invalid input.\n";
         return;
     }
 
-    if (choice == 4)
+    if (choice == 5)
+    {
         return;
+    }
 
     bool success = false;
 
@@ -611,6 +1003,10 @@ void runAllTestsForAssignment()
         success = runAllAssignment3Tests();
         break;
 
+    case 4:
+        success = runAllAssignment4Tests();
+        break;
+
     default:
         cout << "Error: Invalid assignment choice.\n";
         return;
@@ -619,14 +1015,23 @@ void runAllTestsForAssignment()
     cout << "\n=========================================\n";
 
     if (success)
-        cout << "All tests for the selected assignment completed successfully.\n";
+    {
+        cout << "All tests for the selected assignment "
+                "completed successfully.\n";
+    }
     else
-        cout << "Some tests for the selected assignment failed.\n";
+    {
+        cout << "Some tests for the selected assignment "
+                "failed.\n";
+    }
 
     cout << "=========================================\n";
 }
 
+// ============================================================
 // Run all submitted algorithms
+// ============================================================
+
 void runAllSubmittedAlgorithms()
 {
     cout << "\n=========================================\n";
@@ -635,7 +1040,10 @@ void runAllSubmittedAlgorithms()
 
     bool allSuccessful = true;
 
+    // --------------------------------------------------------
     // Assignment 1 - GEMM
+    // --------------------------------------------------------
+
     if (!runAllAlgorithmTests(
             "GEMM",
             "assignment_01/tests/gemm",
@@ -644,7 +1052,10 @@ void runAllSubmittedAlgorithms()
         allSuccessful = false;
     }
 
+    // --------------------------------------------------------
     // Assignment 1 - CSR
+    // --------------------------------------------------------
+
     if (!runAllAlgorithmTests(
             "CSR",
             "assignment_01/tests/csr",
@@ -653,7 +1064,10 @@ void runAllSubmittedAlgorithms()
         allSuccessful = false;
     }
 
+    // --------------------------------------------------------
     // Assignment 2 - Bellman-Ford
+    // --------------------------------------------------------
+
     if (!runAllAlgorithmTests(
             "Bellman-Ford",
             "assignment_02/tests/bellman_ford",
@@ -662,7 +1076,10 @@ void runAllSubmittedAlgorithms()
         allSuccessful = false;
     }
 
+    // --------------------------------------------------------
     // Assignment 2 - Floyd-Warshall
+    // --------------------------------------------------------
+
     if (!runAllAlgorithmTests(
             "Floyd-Warshall",
             "assignment_02/tests/floyd_warshall",
@@ -671,7 +1088,10 @@ void runAllSubmittedAlgorithms()
         allSuccessful = false;
     }
 
-    // Assignment 3 - Kruskal MST
+    // --------------------------------------------------------
+    // Assignment 3 - Kruskal
+    // --------------------------------------------------------
+
     if (!runAllAlgorithmTests(
             "Kruskal MST",
             "assignment_03/tests/mst",
@@ -680,11 +1100,38 @@ void runAllSubmittedAlgorithms()
         allSuccessful = false;
     }
 
-    // Assignment 3 - Prim MST
+    // --------------------------------------------------------
+    // Assignment 3 - Prim
+    // --------------------------------------------------------
+
     if (!runAllAlgorithmTests(
             "Prim MST",
             "assignment_03/tests/mst",
             "prim_driver.exe"))
+    {
+        allSuccessful = false;
+    }
+
+    // --------------------------------------------------------
+    // Assignment 4 - Welsh-Powell Vertex Coloring
+    // --------------------------------------------------------
+
+    if (!runAllAlgorithmTests(
+            "Welsh-Powell Vertex Coloring",
+            "assignment_04/tests/coloring",
+            "vertex_coloring_driver.exe"))
+    {
+        allSuccessful = false;
+    }
+
+    // --------------------------------------------------------
+    // Assignment 4 - PageRank
+    // --------------------------------------------------------
+
+    if (!runAllAlgorithmTests(
+            "PageRank",
+            "assignment_04/tests/pagerank",
+            "pagerank_driver.exe"))
     {
         allSuccessful = false;
     }
@@ -695,7 +1142,8 @@ void runAllSubmittedAlgorithms()
 
     if (allSuccessful)
     {
-        cout << "Result: ALL SUBMITTED ALGORITHMS COMPLETED SUCCESSFULLY\n";
+        cout << "Result: ALL SUBMITTED ALGORITHMS "
+                "COMPLETED SUCCESSFULLY\n";
     }
     else
     {
@@ -705,7 +1153,10 @@ void runAllSubmittedAlgorithms()
     cout << "=========================================\n";
 }
 
+// ============================================================
 // Compile assignment selection
+// ============================================================
+
 void compileAssignment()
 {
     int choice;
@@ -717,7 +1168,8 @@ void compileAssignment()
     cout << "1. Assignment 1\n";
     cout << "2. Assignment 2\n";
     cout << "3. Assignment 3\n";
-    cout << "4. Back\n";
+    cout << "4. Assignment 4\n";
+    cout << "5. Back\n";
 
     cout << "\nEnter choice: ";
 
@@ -725,6 +1177,7 @@ void compileAssignment()
     {
         cin.clear();
         cin.ignore(10000, '\n');
+
         cout << "Error: Invalid input.\n";
         return;
     }
@@ -746,6 +1199,10 @@ void compileAssignment()
         break;
 
     case 4:
+        success = compileAssignment4();
+        break;
+
+    case 5:
         return;
 
     default:
@@ -757,15 +1214,20 @@ void compileAssignment()
 
     if (success)
     {
-        cout << "Assignment compilation completed successfully.\n";
+        cout << "Assignment compilation completed "
+                "successfully.\n";
     }
     else
     {
-        cout << "Assignment compilation completed with errors.\n";
+        cout << "Assignment compilation completed "
+                "with errors.\n";
     }
 }
 
+// ============================================================
 // Compile all assignments
+// ============================================================
+
 void compileAllAssignments()
 {
     cout << "\n=========================================\n";
@@ -774,7 +1236,8 @@ void compileAllAssignments()
 
     bool assignment1Success = compileAssignment1();
     bool assignment2Success = compileAssignment2();
-    bool assignment3Success = compileAssignment3(false);
+    bool assignment3Success = compileAssignment3();
+    bool assignment4Success = compileAssignment4();
 
     cout << "\n=========================================\n";
     cout << "        OVERALL COMPILATION STATUS\n";
@@ -792,21 +1255,31 @@ void compileAllAssignments()
          << (assignment3Success ? "SUCCESS" : "FAILED")
          << '\n';
 
+    cout << "Assignment 4 : "
+         << (assignment4Success ? "SUCCESS" : "FAILED")
+         << '\n';
+
     if (assignment1Success &&
         assignment2Success &&
-        assignment3Success)
+        assignment3Success &&
+        assignment4Success)
     {
-        cout << "\nResult: ALL ASSIGNMENTS COMPILED SUCCESSFULLY\n";
+        cout << "\nResult: ALL ASSIGNMENTS "
+                "COMPILED SUCCESSFULLY\n";
     }
     else
     {
-        cout << "\nResult: SOME ASSIGNMENTS FAILED TO COMPILE\n";
+        cout << "\nResult: SOME ASSIGNMENTS "
+                "FAILED TO COMPILE\n";
     }
 
     cout << "=========================================\n";
 }
 
+// ============================================================
 // Main Function
+// ============================================================
+
 int main()
 {
     int choice;
@@ -832,7 +1305,9 @@ int main()
             cin.clear();
             cin.ignore(10000, '\n');
 
-            cout << "Error: Invalid input. Please enter a number.\n";
+            cout << "Error: Invalid input. "
+                    "Please enter a number.\n";
+
             continue;
         }
 
