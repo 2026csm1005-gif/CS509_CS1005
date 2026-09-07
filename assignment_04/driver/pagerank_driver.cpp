@@ -3,12 +3,12 @@
 #include <string>
 #include <vector>
 
+#include "../../assignment_01/include/csr.h"
+#include "../../assignment_01/include/edge.h"
+#include "../../assignment_01/include/graph.h"
+#include "../../assignment_01/include/timer.h"
 #include "../include/a4_graph_reader.h"
 #include "../include/pagerank.h"
-
-#include "../../assignment_01/include/edge.h"
-#include "../../assignment_01/include/csr.h"
-#include "../../assignment_01/include/timer.h"
 
 using namespace std;
 
@@ -16,9 +16,12 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        cerr << "Usage: pagerank_driver <input_file>\n";
+        cerr << "Usage: " << argv[0]
+             << " <input_graph_file>\n";
         return 1;
     }
+
+    const string filename = argv[1];
 
     Graph graph;
 
@@ -29,27 +32,19 @@ int main(int argc, char *argv[])
     string errorMessage;
 
     if (!readPageRankGraph(
-            argv[1],
+            filename,
             graph,
             damping,
             tolerance,
             maxIterations,
             errorMessage))
     {
-        cerr << "Error: "
-             << errorMessage
-             << '\n';
-
+        cerr << "Error: " << errorMessage << '\n';
         return 1;
     }
 
-    vector<Edge> edgeList =
-        createEdgeList(graph);
-
-    CSR csr =
-        createCSR(
-            edgeList,
-            graph.vertices);
+    vector<Edge> edgeList = createEdgeList(graph);
+    CSR csr = createCSR(edgeList, graph.vertices);
 
     Timer timer;
 
@@ -69,62 +64,60 @@ int main(int argc, char *argv[])
     cout << "PageRank\n";
     cout << "=========================================\n";
 
-    cout << fixed
-         << setprecision(6);
+    cout << "Input File: " << filename << '\n';
+    cout << "Number of vertices: " << graph.vertices << '\n';
+    cout << "Number of edges: " << graph.edges << '\n';
 
-    cout << "Vertices: "
-         << graph.vertices
-         << '\n';
+    cout << "Damping Factor: " << damping << '\n';
+    cout << "Tolerance: " << tolerance << '\n';
+    cout << "Maximum Iterations: " << maxIterations << '\n';
 
-    cout << "Edges: "
-         << graph.edges
-         << '\n';
+    if (graph.vertices <= 100)
+    {
+        cout << "\nVertex PageRanks:\n";
 
-    cout << "Damping: "
-         << damping
-         << '\n';
+        cout << fixed << setprecision(10);
 
-    cout << "Tolerance: "
-         << tolerance
-         << '\n';
+        for (int vertex = 0; vertex < graph.vertices; vertex++)
+        {
+            cout << "Vertex " << vertex
+                 << " -> Rank " << result.ranks[vertex]
+                 << '\n';
+        }
+    }
+    else
+    {
+        cout << "\nIndividual PageRank values omitted "
+                "for large graph.\n";
 
-    cout << "Max iterations: "
-         << maxIterations
-         << '\n';
-
-    cout << "\nVertex ranks:\n";
+        cout << "Number of vertices is greater than 100.\n";
+    }
 
     double rankSum = 0.0;
 
-    for (int vertex = 0;
-         vertex < graph.vertices;
-         ++vertex)
+    for (double rank : result.ranks)
     {
-        cout << vertex
-             << " "
-             << result.ranks[vertex]
-             << '\n';
-
-        rankSum += result.ranks[vertex];
+        rankSum += rank;
     }
 
-    cout << "\nSum of ranks: "
-         << rankSum
-         << '\n';
+    cout << fixed << setprecision(10);
+
+    cout << "\nRank Sum: "
+         << rankSum << '\n';
 
     cout << "Iterations: "
-         << result.iterations
-         << '\n';
+         << result.iterations << '\n';
 
     cout << "Converged: "
-         << (result.converged ? "true" : "false")
-         << '\n';
+         << (result.converged ? "YES" : "NO") << '\n';
 
-    cout << "Execution time: "
+    cout << setprecision(6);
+
+    cout << "Execution Time: "
          << timer.getElapsedTime()
          << " ms\n";
 
     cout << "=========================================\n";
 
-    return 0;
+    return result.converged ? 0 : 1;
 }

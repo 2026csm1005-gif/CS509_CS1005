@@ -4,12 +4,12 @@
 #include <string>
 #include <vector>
 
+#include "../../assignment_01/include/csr.h"
+#include "../../assignment_01/include/edge.h"
+#include "../../assignment_01/include/graph.h"
+#include "../../assignment_01/include/timer.h"
 #include "../include/a4_graph_reader.h"
 #include "../include/vertex_coloring.h"
-
-#include "../../assignment_01/include/edge.h"
-#include "../../assignment_01/include/csr.h"
-#include "../../assignment_01/include/timer.h"
 
 using namespace std;
 
@@ -17,75 +17,68 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        cerr << "Usage: vertex_coloring_driver <input_file>\n";
+        cerr << "Usage: " << argv[0]
+             << " <input_graph_file>\n";
         return 1;
     }
+
+    const string filename = argv[1];
 
     Graph graph;
     string errorMessage;
 
-    if (!readColoringGraph(
-            argv[1],
-            graph,
-            errorMessage))
+    if (!readColoringGraph(filename, graph, errorMessage))
     {
         cerr << "Error: " << errorMessage << '\n';
         return 1;
     }
 
-    vector<Edge> edgeList =
-        createEdgeList(graph);
-
-    CSR csr =
-        createCSR(
-            edgeList,
-            graph.vertices);
+    vector<Edge> edgeList = createEdgeList(graph);
+    CSR csr = createCSR(edgeList, graph.vertices);
 
     Timer timer;
 
     timer.start();
 
     ColoringResult result =
-        greedyVertexColoring(
-            graph.vertices,
-            csr);
+        greedyVertexColoring(graph.vertices, csr);
 
     timer.stop();
 
     cout << "\n=========================================\n";
-    cout << "Greedy Vertex Coloring\n";
+    cout << "Welsh-Powell Vertex Coloring\n";
     cout << "=========================================\n";
 
-    cout << "Vertices: "
-         << graph.vertices << '\n';
+    cout << "Input File: " << filename << '\n';
+    cout << "Number of vertices: " << graph.vertices << '\n';
+    cout << "Number of edges: " << graph.edges << '\n';
 
-    cout << "Edges: "
-         << graph.edges << '\n';
-
-    cout << "\nVertex colors:\n";
-
-    for (int vertex = 0;
-         vertex < graph.vertices;
-         ++vertex)
+    if (graph.vertices <= 100)
     {
-        cout << vertex
-             << " "
-             << result.colors[vertex]
-             << '\n';
+        cout << "\nVertex Colors:\n";
+
+        for (int vertex = 0; vertex < graph.vertices; vertex++)
+        {
+            cout << "Vertex " << vertex
+                 << " -> Color " << result.colors[vertex]
+                 << '\n';
+        }
+    }
+    else
+    {
+        cout << "\nVertex colors omitted for large graph.\n";
+        cout << "Number of vertices is greater than 100.\n";
     }
 
-    cout << "\nColors used: "
-         << result.colorsUsed
-         << '\n';
+    cout << "\nColors Used: "
+         << result.colorsUsed << '\n';
 
-    cout << "Valid coloring: "
-         << (result.valid ? "Yes" : "No")
-         << '\n';
+    cout << "Coloring Valid: "
+         << (result.valid ? "YES" : "NO") << '\n';
 
-    cout << fixed
-         << setprecision(6);
+    cout << fixed << setprecision(6);
 
-    cout << "Execution time: "
+    cout << "Execution Time: "
          << timer.getElapsedTime()
          << " ms\n";
 
